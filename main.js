@@ -1,7 +1,28 @@
 import * as THREE from 'three';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { createIcons, Activity, Sun, Zap, Layers, TrendingUp } from 'lucide';
+import {
+  createIcons,
+  Activity,
+  Sun,
+  Zap,
+  Layers,
+  TrendingUp,
+  ArrowRight,
+  Star,
+  MousePointer2,
+  Clock,
+  Code,
+  Image,
+  Palette,
+  Cpu,
+  ShieldCheck,
+  SlidersHorizontal,
+  Atom,
+  Folder,
+  FileText,
+  Wand2
+} from 'lucide';
 
 // ----------------------------------------------------
 // 1. Initialize Lucide Icons
@@ -12,7 +33,21 @@ createIcons({
     Sun,
     Zap,
     Layers,
-    TrendingUp
+    TrendingUp,
+    ArrowRight,
+    Star,
+    MousePointer2,
+    Clock,
+    Code,
+    Image,
+    Palette,
+    Cpu,
+    ShieldCheck,
+    SlidersHorizontal,
+    Atom,
+    Folder,
+    FileText,
+    Wand2
   }
 });
 
@@ -43,7 +78,27 @@ window.switchTab = function(tabId) {
   }
   // Re-run createIcons to process any newly visible Lucide elements
   createIcons({
-    icons: { Activity, Sun, Zap, Layers, TrendingUp }
+    icons: {
+      Activity,
+      Sun,
+      Zap,
+      Layers,
+      TrendingUp,
+      ArrowRight,
+      Star,
+      MousePointer2,
+      Clock,
+      Code,
+      Image,
+      Palette,
+      Cpu,
+      ShieldCheck,
+      SlidersHorizontal,
+      Atom,
+      Folder,
+      FileText,
+      Wand2
+    }
   });
 };
 
@@ -347,9 +402,6 @@ const initThree = () => {
   const beamMaterial = extendMaterial(THREE.MeshStandardMaterial, {
     header: `varying vec3 vEye; varying float vNoise; varying vec2 vUv; varying vec3 vPosition; uniform float time; uniform float uSpeed; uniform float uNoiseIntensity; uniform float uScale; ${noiseShader}`,
     vertexHeader: `
-      #ifndef USE_UV
-        attribute vec2 uv;
-      #endif
       float getPos(vec3 pos) { vec3 noisePos = vec3(pos.x * 0., pos.y - uv.y, pos.z + time * uSpeed * 3.) * uScale; return cnoise(noisePos); }
       vec3 getCurrentPos(vec3 pos) { vec3 newpos = pos; newpos.z += getPos(pos); return newpos; }
       vec3 getNormal(vec3 pos) { vec3 curpos = getCurrentPos(pos); vec3 nextposX = getCurrentPos(pos + vec3(0.01, 0.0, 0.0)); vec3 nextposZ = getCurrentPos(pos + vec3(0.0, -0.01, 0.0)); vec3 tangentX = normalize(nextposX - curpos); vec3 tangentZ = normalize(nextposZ - curpos); return normalize(cross(tangentZ, tangentX)); }
@@ -415,7 +467,11 @@ const initThree = () => {
   });
 };
 
-document.addEventListener('DOMContentLoaded', initThree);
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initThree);
+} else {
+  initThree();
+}
 
 // ----------------------------------------------------
 // 7. Video Intersection Observer Playback
